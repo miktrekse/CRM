@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inspections extends Model
 {
+protected $keyType = 'string';
         protected $fillable = [
         'case_id',
         'case_id',

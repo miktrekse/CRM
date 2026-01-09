@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PartiesController extends UserController
+class PartiesController extends Controller
 {
     //
 }

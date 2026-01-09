@@ -1,9 +1,32 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
 use App\Models\User;
 
-abstract class UserController
+class UserController extends Controller
 {
-
+   public function show($id){
+        $user = User::findOrFail($id);
+        return view('users.show', compact('user'));
+    }
+    public function index(){
+        $users = User::all();
+        return view('users.index', compact('users'));
+    }
+        public function create(){
+        $users = User::all();
+        return view('users.create', compact('users'));
+    }
+       public function edit($id){
+        $user = User::findOrFail($id);
+        return view('users.edit', compact('user'));
+    }
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+        return redirect()->route('users.show', ['user' => $user]);
+    }
 }
