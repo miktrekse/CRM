@@ -28,4 +28,17 @@ class InspectionsController extends Controller
         $inspection->update($request->all());
         return redirect()->route('inspections.show', ['inspection' => $inspection]);
     }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'inspection_number' => 'required|unique:inspections,inspection_number',
+            'vehicle_id' => 'required',
+            'inspector_name' => 'required',
+            'status' => 'required'
+        ]);
+
+        $inspection = Inspections::create($request->all());
+
+        return redirect()->route('inspections.index')->with('success', __('Inspection created successfully.'));
+    }
 }

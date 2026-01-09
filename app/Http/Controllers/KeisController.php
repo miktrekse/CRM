@@ -22,24 +22,22 @@ class KeisController extends Controller
         $cases = Keis::findOrFail($id);
         return view('cases.edit', ['cases' => $cases]);
     }
-        public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'external_ref' => 'required',
-            'priority' => 'required',
-            'arrival_ts' => 'required',
-            'checkpoint_id' => 'required',
-            'origin_country' => 'required',
-            'destination_country' => 'required',
-            'risk_flags' => 'required',
-            'declarant' => 'required',
-            'consignee' => 'required',
-            'active' => 'required'
-        ]);
-
         $cases = Keis::findOrFail($id);
         $cases->update($request->all());
+        return redirect()->route('cases.show', ['cases' => $cases]);
+    }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'case_number' => 'required|unique:keis,case_number',
+            'description' => 'required',
+            'status' => 'required'
+        ]);
 
-        return redirect()->route('cases.index')->with('success', __('Case updated successfully.'));
+        $cases = Keis::create($request->all());
+
+        return redirect()->route('cases.index')->with('success', __('Case created successfully.'));
     }
 }

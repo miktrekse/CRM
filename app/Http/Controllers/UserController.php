@@ -29,4 +29,17 @@ class UserController extends Controller
         $user->update($request->all());
         return redirect()->route('users.show', ['user' => $user]);
     }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|unique:users,username',
+            'password' => 'required',
+            'full_name' => 'required',
+            'active' => 'required'
+        ]);
+
+        $user = User::create($request->all());
+
+        return redirect()->route('users.index')->with('success', __('User created successfully.'));
+    }
 }
